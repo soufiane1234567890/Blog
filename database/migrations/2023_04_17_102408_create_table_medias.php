@@ -13,7 +13,7 @@ class CreateTableMedias extends Migration
      */
     public function up()
     {
-        Schema::create('table_medias', function (Blueprint $table) {
+        Schema::create('medias', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
             $table->string('file_name');
@@ -32,6 +32,6 @@ class CreateTableMedias extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_medias');
+        Schema::dropIfExists('medias');
     }
 }

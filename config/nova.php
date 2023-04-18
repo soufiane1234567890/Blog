@@ -21,6 +21,7 @@ return [
     */
 
     'license_key' => env('NOVA_LICENSE_KEY'),
+    'tinymce_api_key' => env('TINYMCE_API_KEY'),
 
     /*
     |--------------------------------------------------------------------------
