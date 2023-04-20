@@ -4,6 +4,8 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Slug;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Categorie extends Resource
@@ -41,6 +43,19 @@ class Categorie extends Resource
     {
         return [
             ID::make()->sortable(),
+            Text::make('Nom catégorie', 'name')
+                ->sortable()
+                ->rules('required', 'max:255'),
+            Slug::make('Slug')
+                ->sortable()
+                ->rules('required', 'max:255')->from('name')->separator('_'),
+                
+            Text::make('description')
+                ->sortable()
+                ->rules('max:255'),
+        
+
+
         ];
     }
 
@@ -86,5 +101,9 @@ class Categorie extends Resource
     public function actions(NovaRequest $request)
     {
         return [];
+    }
+
+    public static function label() {
+        return 'Catégories';
     }
 }

@@ -2,11 +2,15 @@
 
 namespace App\Nova;
 
+use App\Nova\Post;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -18,6 +22,7 @@ class User extends Resource
      * @var class-string<\App\Models\User>
      */
     public static $model = \App\Models\User::class;
+    
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -62,6 +67,19 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
+            Select::make('Role')->options([
+                '1' => 'Administrateur',
+                '2' => 'Editeur',
+                '3' => 'Utilisateur',
+            ])->displayUsingLabels()->rules('required'),
+            HasMany::make('Articles', 'posts', Post::class),
+        ];
+    }
+
+    public function with(Request $request)
+    {
+        return [
+            'posts' => $this->posts,
         ];
     }
 
@@ -107,5 +125,10 @@ class User extends Resource
     public function actions(NovaRequest $request)
     {
         return [];
+    }
+
+    public static function label()
+    {
+        return 'Utilisateurs';
     }
 }

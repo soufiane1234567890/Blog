@@ -2,13 +2,23 @@
 
 namespace App\Nova;
 
+use App\Models\Categorie;
+use App\Nova\Categorie as NovaCategorie;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Emilianotisato\NovaTinyMCE\NovaTinyMCE;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Slug;
+
+//use App\Models\Post;
 
 class Post extends Resource
 {
@@ -45,25 +55,39 @@ class Post extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Titre Post')
-                ->sortable()
-                ->rules('required', 'max:255'),
-            Text::make('Slug')
-                ->sortable()
-                ->rules('required', 'max:255'),
-            NovaTinyMCE::make('Description'),
-            Text::make('Résumé de l\'article')
-                ->sortable()
-                ->rules('required', 'max:255'),
-                Image::make('Image de couverture')->disk('public'),
+            Hidden::make('User ID', 'user_id')
+                ->default(auth()->id()),
 
-                Boolean::make('Active'),
-                Text::make('Nombre de view')
+            Select::make('Catégorie', 'categorie_id')
+                ->searchable()
+                ->options(Categorie::all()
+                    ->pluck('name', 'id'))
+                ->rules('required'),
+
+            Text::make('Titre Post', 'title')
                 ->sortable()
                 ->rules('required', 'max:255'),
-            
+            Slug::make('Slug')
+                ->sortable()
+                ->rules('required', 'max:255')->from('title')->separator('_'),
+            NovaTinyMCE::make('Description', 'content'),
+            Text::make('Résumé de l\'article', 'summary')
+                ->sortable()
+                ->rules('required', 'max:255'),
+            Image::make('Image de couverture', 'image')->disk('public'),
 
+            Boolean::make('Active', 'status'),
+            Hidden::make('Nombre de view', 'view_count')
+                ->default(0),
+            HasMany::make('Commentaires', 'comments', Comment::class),
 
+        ];
+    }
+
+    public function with(Request $request)
+    {
+        return [
+            'comments' => $this->comments,
         ];
     }
 
@@ -109,5 +133,19 @@ class Post extends Resource
     public function actions(NovaRequest $request)
     {
         return [];
+    }
+
+    public static function label()
+    {
+        return 'Articles';
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if ($request->user()->role == 2) {
+            $user_id = $request->user()->id;
+            // Filtrer les articles en fonction de l'utilisateur connecté
+            return $query->where('user_id', $user_id);
+        }
     }
 }

@@ -4,7 +4,10 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Slug;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+
 
 class Tag extends Resource
 {
@@ -41,6 +44,12 @@ class Tag extends Resource
     {
         return [
             ID::make()->sortable(),
+            Text::make('Nom Tag', 'name' )
+                ->sortable()
+                ->rules('required', 'max:255'),
+            Slug::make('Slug')
+                ->sortable()
+                ->rules('required', 'max:255')->from('name')->separator('_'),
         ];
     }
 
@@ -87,4 +96,9 @@ class Tag extends Resource
     {
         return [];
     }
+
+    public static function label() {
+        return 'Mots-clés';
+    }
+    
 }

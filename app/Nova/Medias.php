@@ -3,7 +3,10 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Medias extends Resource
@@ -41,6 +44,12 @@ class Medias extends Resource
     {
         return [
             ID::make()->sortable(),
+            Hidden::make('User ID', 'user_id')
+                ->default(auth()->id()),
+            Text::make('Titre', 'file_name')
+                ->sortable()
+                ->rules('required', 'max:255'),
+            Image::make('Charger une image', 'file_path')->disk('public')->rules('required'),
         ];
     }
 
@@ -86,5 +95,9 @@ class Medias extends Resource
     public function actions(NovaRequest $request)
     {
         return [];
+    }
+
+    public static function label() {
+        return 'Images';
     }
 }

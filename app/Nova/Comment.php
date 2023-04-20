@@ -2,8 +2,14 @@
 
 namespace App\Nova;
 
+use App\Models\Comment as ModelsComment;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Comment extends Resource
@@ -41,6 +47,22 @@ class Comment extends Resource
     {
         return [
             ID::make()->sortable(),
+            Text::make('Commentaire', 'content')
+                ->sortable()
+                ->rules('required', 'max:255'),
+            Select::make('Choisir Post', 'post_id')
+                ->searchable()
+                ->options(Post::all()
+                    ->pluck('title', 'id'))
+                ->rules('required'),
+            Hidden::make('User ID', 'user_id')
+                ->default(auth()->id()),
+            Boolean::make('Active'),
+
+            Select::make('Choisir Parent', 'parent_id')
+                ->searchable()
+                ->options(ModelsComment::all()
+                    ->pluck('content', 'id')),
         ];
     }
 
@@ -87,4 +109,17 @@ class Comment extends Resource
     {
         return [];
     }
+
+    public static function label()
+    {
+        return 'Commentaires';
+    }
+
+    // public static function indexQuery(NovaRequest $request, $query)
+    // {
+    //     if ($request->user()->role == 2) {
+    //         $user_id = $request->user()->id;
+    //         return $query->join('posts', 'posts.id', '=', 'comments.post_id')->select('comments.id', 'comments.content', 'comments.post_id', 'comments.user_id', 'comments.status')->where('posts.user_id', $user_id)->get();
+    //     }
+    // }
 }
