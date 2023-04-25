@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Nova\Contact;
+use App\Nova\Newsletter;
 use App\Nova\Categorie;
 use App\Nova\Comment;
 use App\Nova\Medias;
@@ -55,6 +57,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         MenuSection::make('Utilisateurs',  [
                             MenuItem::resource(User::class),
                         ])->icon('user'),
+
+                        MenuSection::make('Contact',  [
+                            MenuItem::resource(Contact::class),
+                        ])->icon('chat'),
+
+                        MenuSection::make('Newsletter',  [
+                            MenuItem::resource(Newsletter::class),
+                        ])->icon('mail'),
         
                         MenuSection::make('Medias',  [
                             MenuItem::resource(Medias::class),

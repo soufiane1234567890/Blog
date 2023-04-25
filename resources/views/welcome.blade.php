@@ -1,109 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    @extends('layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mon blog</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-        #slider {
-            margin-top: 50px;
-        }
-
-        .card-header {
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .list-group-item {
-            cursor: pointer;
-        }
-
-        .card-body form {
-            margin-bottom: 0;
-        }
-
-        .card-body input[type="email"] {
-            margin-bottom: 10px;
-        }
-
-        .mt-3 {
-            margin-bottom: 8px;
-        }
-
-        footer {
-            background-color: #f8f9fa;
-            text-align: center;
-            padding: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .navbar-collapse {
-                margin-top: 20px;
-            }
-        }
-    </style>
-</head>
-
-<body class="antialiased">
-
-
-    <body>
-        <header>
-            <nav class="container navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Blog</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Articles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">À propos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-
-
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    @if (Route::has('login'))
-                        <ul class="navbar-nav">
-                            @auth
-                            @else
-                                <li class="nav-item">
-                                    <a class="btn btn-outline-secondary nav-link mr-2"
-                                        href="{{ route('login') }}">Connexion</a>
-                                </li>
-                                @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a class="btn btn-outline-info nav-link"
-                                            href="{{ route('register') }}">Inscription</a>
-                                    </li>
-                                @endif
-                            @endauth
-                        </ul>
-
-
-                    @endif
-                </div>
-            </nav>
-        </header>
-
-
-
+    @section('content')
         <main>
             <div class="container">
                 <div class="row">
@@ -153,76 +50,50 @@
                         <h2 class="mt-5 mb-3">Derniers articles</h2>
 
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="card mb-4">
-                                    <img class="card-img-top" src="https://picsum.photos/id/1015/600/400"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titre de l'article</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                            Nullam vitae eros nec ipsum efficitur tincidunt.</p>
-                                        <div class="mt-3">
-                                            <i class="fa fa-eye"></i> 500 vues
-                                            <i class="fa fa-comments"></i> 10 commentaires
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Lire la suite</a>
+                            @foreach ($postslast as $post)
+                                <div class="col-md-6">
+                                    <div class="card mb-4">
+                                        <img class="card-img-top" src="{{ asset('images/articles/' . $post->image) }}"
+                                            alt="{{ $post->title }}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $post->title }}</h5>
+                                            <p class="card-text">{{ $post->summary }}</p>
+                                            <div class="mt-3">
+                                                <i class="fa fa-eye"></i> 500 vues
+                                                <i class="fa fa-comments"></i> 10 commentaires
+                                            </div>
+                                            <a href="{{ route('detail.article', $post->slug) }}"
+                                                class="btn btn-primary">Lire la suite</a>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card mb-4">
-                                    <img class="card-img-top" src="https://picsum.photos/id/1016/600/400"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titre de l'article</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                            Nullam vitae eros nec ipsum efficitur tincidunt.</p>
-                                        <div class="mt-3">
-                                            <i class="fa fa-eye"></i> 500 vues
-                                            <i class="fa fa-comments"></i> 10 commentaires
                                         </div>
-                                        <a href="#" class="btn btn-primary">Lire la suite</a>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
+
                         </div>
 
                         <h2 class="mt-5 mb-3">À la une</h2>
 
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="card mb-4">
-                                    <img class="card-img-top" src="https://picsum.photos/id/1025/600/400"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titre de l'article</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                            Nullam vitae eros nec ipsum efficitur tincidunt.</p>
-                                        <div class="mt-3">
-                                            <i class="fa fa-eye"></i> 500 vues
-                                            <i class="fa fa-comments"></i> 10 commentaires
+                            @foreach ($postspopulaires as $postp)
+                                <div class="col-md-6">
+                                    <div class="card mb-4">
+                                        <img class="card-img-top" src="{{ asset('images/articles/' . $post->image) }}"
+                                            alt="{{ $post->title }}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $postp->title }}</h5>
+                                            <p class="card-text">{{ $postp->summary }}</p>
+                                            <div class="mt-3">
+                                                <i class="fa fa-eye"></i> 500 vues
+                                                <i class="fa fa-comments"></i> 10 commentaires
+                                            </div>
+                                            <a href="#" class="btn btn-primary">Lire la suite</a>
                                         </div>
-                                        <a href="#" class="btn btn-primary">Lire la suite</a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card mb-4">
-                                    <img class="card-img-top" src="https://picsum.photos/id/1026/600/400"
-                                        alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titre de l'article</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                            Nullam vitae eros nec ipsum efficitur tincidunt.</p>
-                                        <div class="mt-3">
-                                            <i class="fa fa-eye"></i> 500 vues
-                                            <i class="fa fa-comments"></i> 10 commentaires
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Lire la suite</a>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+
+
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -233,9 +104,12 @@
                                 Catégories
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Catégorie 1</li>
-                                <li class="list-group-item">Catégorie 2</li>
-                                <li class="list-group-item">Catégorie 3</li>
+                                @foreach ($categories as $categorie)
+                                    <li class="list-group-item"><a
+                                            href="{{ route('articles', ['categorie' => $categorie->id]) }}"
+                                            style="text-decoration: none;color: black;">{{ $categorie->name }}</a></li>
+                                @endforeach
+
                             </ul>
                         </div>
 
@@ -294,17 +168,22 @@
                                 Abonnez-vous à notre newsletter
                             </div>
                             <div class="card-body">
-                                <form>
+                                @if (session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                <form action="{{ route('newsletter.envoyer') }}" method="post">
+                                    @csrf
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <input type="email" class="form-control" id="email"
+                                            <input type="email" class="form-control" id="email" name="mail"
                                                 placeholder="Entrez votre adresse email">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <button type="submit"
-                                                class="btn btn-primary btn-block">S'inscrire</button>
+                                            <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
                                         </div>
                                     </div>
                                 </form>
@@ -329,16 +208,4 @@
         <footer>
             <p>© 2023 Blog</p>
         </footer>
-
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper-base.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-
-    </body>
-
-</html>
-</body>
-
-</html>
+    @endsection

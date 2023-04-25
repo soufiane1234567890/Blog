@@ -11,8 +11,7 @@ use App\Models\Comment;
 class Post extends Model
 {
     use HasFactory;
-
-    public static $uriKey = 'posts';
+    
 
     public function user()
     {

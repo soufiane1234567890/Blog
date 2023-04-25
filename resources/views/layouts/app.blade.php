@@ -11,22 +11,81 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        #slider {
+            margin-top: 50px;
+        }
+
+        .card-header {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .list-group-item {
+            cursor: pointer;
+        }
+
+        .card-body form {
+            margin-bottom: 0;
+        }
+
+        .card-body input[type="email"] {
+            margin-bottom: 10px;
+        }
+
+        .mt-3 {
+            margin-bottom: 8px;
+        }
+
+
+
+        .comment-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        }
+
+        .comment {
+        margin-bottom: 20px;
+        }
+
+        .comment h5 {
+        margin-bottom: 5px;
+        }
+
+        .badge {
+        margin-right: 10px;
+        }
+
+
+        footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-collapse {
+                margin-top: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div id="app">
         <header>
             <nav class="container navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Blog</a>
+                <a class="navbar-brand" href="/">Blog</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -34,16 +93,16 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Accueil</a>
+                            <a class="nav-link" href="/">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Articles</a>
+                            <a class="nav-link" href="{{ route('articles') }}">Articles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">À propos</a>
+                            <a class="nav-link" href="{{ route('apropos') }}">À propos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
+                            <a class="nav-link" href="{{ route('contact') }}">Contact</a>
                         </li>
                     </ul>
                 </div>

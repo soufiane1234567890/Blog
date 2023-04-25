@@ -13,10 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/article/{slug}', [App\Http\Controllers\BlogController::class, 'detail'])->name('detail.article');
+Route::get('/articles', [App\Http\Controllers\BlogController::class, 'articles'])->name('articles');
+Route::get('/apropos', [App\Http\Controllers\BlogController::class, 'apropos'])->name('apropos');
+Route::get('/contact', [App\Http\Controllers\BlogController::class, 'contact'])->name('contact');
+Route::post('/envoyer/contact', [App\Http\Controllers\BlogController::class, 'envoyercontact'])->name('envoyer.contact');
+Route::post('/envoyer/newsletter', [App\Http\Controllers\BlogController::class, 'newsletterenvoyer'])->name('newsletter.envoyer');
