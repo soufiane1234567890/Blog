@@ -27,17 +27,21 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        $postslast = DB::table('posts')
-            ->orderBy('created_at', 'desc')
-            ->take(4)
-            ->get();
+        $postslast =Post::with(['comments' => function ($query) {
+        }])->limit(4)->get();
+      //dd(json_encode($postslast));  
+        // DB::table('posts')
+        //     ->orderBy('created_at', 'desc')
+        //     ->take(4)
+        //     ->get();
 
-        $postspopulaires = DB::table('posts')
-            ->where('view_count', '>=', 1)
-            ->take(4)
-            ->get();
+        $postspopulaires = Post::with(['comments' => function ($query) {
+        }])->where('view_count', '>=', 1)->limit(4)->get();
+        // DB::table('posts')
+        //     ->where('view_count', '>=', 1)
+        //     ->take(4)
+        //     ->get();
         $categories = Categorie::all()->take(10);
-        //dd($postslast);
         return view('welcome', compact(['postslast', 'postspopulaires', 'categories']));
     }
 

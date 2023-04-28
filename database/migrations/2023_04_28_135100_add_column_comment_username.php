@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTablePosttags extends Migration
+class AddColumnCommentUsername extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateTablePosttags extends Migration
      */
     public function up()
     {
-        Schema::create('posttags', function (Blueprint $table) {
-            $table->id();
-            $table->integer('post_id')->index();
-            $table->integer('tag_id')->index();
-            $table->timestamps();
+        Schema::table('comments', function (Blueprint $table) {
+            $table->string('username')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateTablePosttags extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posttags');
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropColumn('username');
+        });
     }
 }

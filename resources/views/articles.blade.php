@@ -9,12 +9,13 @@
                 <ul class="list-group">
                     @foreach ($categories as $categorie)
                         <li class="list-group-item d-flex
-                justify-content-between align-items-center" @if (Request()->categorie == $categorie->id)
-                style="background: #ebe9e9;"
-                @endif>
-                <a  href="{{ route('articles', ['categorie'=> $categorie->id]) }}" style="text-decoration: none;color: black;">
-                            {{ $categorie->name }}</a>
-                            <span class="badge bg-primary rounded-pill">{{ $categorie->getNumberItemByCategorie($categorie->id) }}</span>
+                justify-content-between align-items-center"
+                            @if (Request()->categorie == $categorie->id) style="background: #ebe9e9;" @endif>
+                            <a href="{{ route('articles', ['categorie' => $categorie->id]) }}"
+                                style="text-decoration: none;color: black;">
+                                {{ $categorie->name }}</a>
+                            <span
+                                class="badge bg-primary rounded-pill">{{ $categorie->getNumberItemByCategorie($categorie->id) }}</span>
                         </li>
                     @endforeach
                 </ul>
@@ -43,8 +44,8 @@
                                     <h5 class="card-title">{{ $post->title }}</h5>
                                     <p class="card-text">{{ $post->summary }}</p>
                                     <div class="mt-3">
-                                        <i class="far fa-eye"></i> 500 vues
-                                        <i class="far fa-comments"></i> 10
+                                        <i class="far fa-eye"></i> {{ $post->view_count }} vues
+                                        <i class="far fa-comments"></i> {{ count($post->comments) }}
                                         commentaires
                                     </div>
                                     <a href="{{ route('detail.article', $post->slug) }}" class="btn btn-primary mt-3">Lire

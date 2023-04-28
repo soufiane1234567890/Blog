@@ -4,8 +4,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <img src="{{ asset('images/articles/'.$article->image) }}" alt="Cover
-                        Image" class="img-fluid" width="100%">
+                <img src="{{ asset('images/articles/' . $article->image) }}" alt="Cover
+                        Image"
+                    class="img-fluid" width="100%">
                 <h1 class="mt-4 mb-3">{{ $article->title }}</h1>
 
             </div>
@@ -16,23 +17,42 @@
                 </div>
             </div>
             <div class="mt-4 mb-4">
-                <span class="badge rounded-pill bg-primary">Tag 1</span>
-                <span class="badge rounded-pill bg-secondary">Tag 2</span>
-                <span class="badge rounded-pill bg-success">Tag 3</span>
-                <span class="badge rounded-pill bg-danger">Tag 4</span>
+                @foreach ($tags as $tag)
+                    <span class="badge rounded-pill bg-secondary">{{ $tag->name }}</span>
+                @endforeach
+
             </div>
-            <h3>Comments</h3>
+            <h3>Commentaires</h3>
             <div class="comment-box mt-4 mb-4">
-                <div class="comment">
-                    <h5>John Doe</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit.</p>
-                </div>
-                <div class="comment">
-                    <h5>Jane Doe</h5>
-                    <p>Nullam sit amet nisi condimentum, auctor velit
-                        sed, malesuada enim.</p>
-                </div>
+                @foreach ($comments as $comment)
+                    <div class="comment">
+                        <h5>{{ $comment->username }}</h5>
+                        <p>{{ $comment->content }}</p>
+                    </div>
+                @endforeach
+                @if (auth()->check())
+                    <form class="comment" action="{{ route('sendcomment') }}" method="post">
+                        @csrf
+                        <div class="input-group">
+                            <input type="text" name="commentaire" class="form-control"
+                                placeholder="laisser votre commentaire ici...">
+                            <input type="hidden" name="post_id" value="{{ $article->id }}">
+                            <input type="hidden" name="user_name" value="{{ Auth::user()->name }}">
+                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">Envoyer</button>
+                            </div>
+                        </div>
+                    </form>
+                @else
+                    <p>Veuillez vous connecter pour faire des commentaires</p>
+                @endif
+
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>

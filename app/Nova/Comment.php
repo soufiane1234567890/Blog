@@ -57,7 +57,7 @@ class Comment extends Resource
                 ->rules('required'),
             Hidden::make('User ID', 'user_id')
                 ->default(auth()->id()),
-            Boolean::make('Active'),
+            // Boolean::make('Active'),
 
             Select::make('Choisir Parent', 'parent_id')
                 ->searchable()
@@ -115,11 +115,18 @@ class Comment extends Resource
         return 'Commentaires';
     }
 
-    // public static function indexQuery(NovaRequest $request, $query)
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    // public function authorizedToDelete(Request $request)
     // {
-    //     if ($request->user()->role == 2) {
-    //         $user_id = $request->user()->id;
-    //         return $query->join('posts', 'posts.id', '=', 'comments.post_id')->select('comments.id', 'comments.content', 'comments.post_id', 'comments.user_id', 'comments.status')->where('posts.user_id', $user_id)->get();
-    //     }
+    //     return false;
     // }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
+    }
 }

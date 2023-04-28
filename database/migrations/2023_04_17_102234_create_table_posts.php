@@ -22,7 +22,7 @@ class CreateTablePosts extends Migration
             $table->string('summary')->nullable();
             $table->string('image')->nullable();
             $table->string('status')->nullable();
-            $table->string('view_count')->nullable();
+            $table->integer('view_count')->nullable();
             $table->timestamps();
         });
     }

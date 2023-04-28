@@ -12,29 +12,19 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="https://picsum.photos/id/1000/1000/500"
+                                    <img class="d-block w-100" src="https://picsum.photos/id/1/1000/500"
                                         alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h2>Titre de l'article</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae eros
-                                            nec ipsum efficitur tincidunt. Maecenas eget purus ac quam bibendum laoreet.
-                                            Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-                                            cubilia Curae; Aenean commodo aliquet lorem a euismod. Integer rhoncus
-                                            convallis nulla ac venenatis. Curabitur imperdiet felis in convallis
-                                            pharetra.</p>
+                                        <h2>l'informatique</h2>
+                                        <p>Bienvenue sur ce blog consacré à l'informatique ! Ici, nous allons explorer différents aspects de ce domaine en constante évolution, que ce soit les dernières technologies, les tendances, les opportunités d'emploi, les enjeux de sécurité et de confidentialité, et bien plus encore.</p>
                                     </div>
                                 </div>
                                 <div class="carousel-item">
                                     <img class="d-block w-100" src="https://picsum.photos/id/1001/1000/500"
                                         alt="Second slide">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h2>Titre de l'article</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae eros
-                                            nec ipsum efficitur tincidunt. Maecenas eget purus ac quam bibendum laoreet.
-                                            Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-                                            cubilia Curae; Aenean commodo aliquet lorem a euismod. Integer rhoncus
-                                            convallis nulla ac venenatis. Curabitur imperdiet felis in convallis
-                                            pharetra.</p>
+                                        <h2>Le père peut aussi le faire.</h2>
+                                        <p>Historiquement, la responsabilité de la garde des enfants a été confiée aux mères, mais au fil du temps, de plus en plus de pères ont choisi de prendre un rôle actif dans l'éducation et l'épanouissement de leurs enfants.</p>
                                     </div>
                                 </div>
                             </div>
@@ -59,8 +49,8 @@
                                             <h5 class="card-title">{{ $post->title }}</h5>
                                             <p class="card-text">{{ $post->summary }}</p>
                                             <div class="mt-3">
-                                                <i class="fa fa-eye"></i> 500 vues
-                                                <i class="fa fa-comments"></i> 10 commentaires
+                                                <i class="fa fa-eye"></i> {{ $post->view_count }} vues
+                                                <i class="fa fa-comments"></i> {{ count($post->comments) }} commentaires
                                             </div>
                                             <a href="{{ route('detail.article', $post->slug) }}"
                                                 class="btn btn-primary">Lire la suite</a>
@@ -78,14 +68,14 @@
                             @foreach ($postspopulaires as $postp)
                                 <div class="col-md-6">
                                     <div class="card mb-4">
-                                        <img class="card-img-top" src="{{ asset('images/articles/' . $post->image) }}"
+                                        <img class="card-img-top" src="{{ asset('images/articles/' . $postp->image) }}"
                                             alt="{{ $post->title }}">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $postp->title }}</h5>
                                             <p class="card-text">{{ $postp->summary }}</p>
                                             <div class="mt-3">
-                                                <i class="fa fa-eye"></i> 500 vues
-                                                <i class="fa fa-comments"></i> 10 commentaires
+                                                <i class="fa fa-eye"></i> {{ $postp->view_count }} vues
+                                                <i class="fa fa-comments"></i> {{ count($postp->comments) }} commentaires
                                             </div>
                                             <a href="#" class="btn btn-primary">Lire la suite</a>
                                         </div>
@@ -195,8 +185,7 @@
                                 À propos
                             </div>
                             <div class="card-body">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae eros nec ipsum
-                                    efficitur tincidunt. Maecenas eget purus ac quam bibendum laoreet.</p>
+                                <p>Bienvenue sur mon blog ! Je suis passionné par les nouvelles technologies et j'aime partager mes découvertes avec le plus grand nombre. J'espère que vous trouverez ici des informations utiles et intéressantes.</p>
                             </div>
                         </div>
 

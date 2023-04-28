@@ -26,3 +26,6 @@ Route::get('/apropos', [App\Http\Controllers\BlogController::class, 'apropos'])-
 Route::get('/contact', [App\Http\Controllers\BlogController::class, 'contact'])->name('contact');
 Route::post('/envoyer/contact', [App\Http\Controllers\BlogController::class, 'envoyercontact'])->name('envoyer.contact');
 Route::post('/envoyer/newsletter', [App\Http\Controllers\BlogController::class, 'newsletterenvoyer'])->name('newsletter.envoyer');
+
+Route::post('/sendcomment', [App\Http\Controllers\BlogController::class, 'sendcomment'])->name('sendcomment');
+

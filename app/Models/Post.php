@@ -10,7 +10,7 @@ use App\Models\Comment;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, \Spatie\Tags\HasTags;
     
 
     public function user()
@@ -21,6 +21,12 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function nbrCommentaire()
+    {
+        //$nbrComment = count(Comment::all());
+        return 10;
     }
 
 }

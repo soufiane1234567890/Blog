@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Categorie;
+use App\Models\Tag as ModelsTag;
 use App\Nova\Categorie as NovaCategorie;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
@@ -17,7 +18,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Slug;
-
+use Spatie\TagsField\Tags;
 //use App\Models\Post;
 
 class Post extends Resource
@@ -80,6 +81,13 @@ class Post extends Resource
             Hidden::make('Nombre de view', 'view_count')
                 ->default(0),
             HasMany::make('Commentaires', 'comments', Comment::class),
+
+            Tags::make('Tags')->withLinkToTagResource(),
+            
+            
+            
+            
+            
 
         ];
     }
